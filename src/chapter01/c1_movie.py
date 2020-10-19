@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import c1_debug1
 
 movies = pd.read_csv("C:/Users/preet/PycharmProjects/pandas_workbook/src/data/movie.csv")
 index = movies.index
@@ -88,6 +89,7 @@ print(imdb_score.add(1))
 print(imdb_score.gt(7))
 
 
+
 money = pd.Series([100,20,None])
 print(money - 15)
 
@@ -96,5 +98,57 @@ print(money.sub(15,fill_value = 0))
 print(fb_likes.fillna(0).astype(int).head())
 
 
+print(fb_likes.fillna(0).pipe(c1_debug1.debug_ser).astype(int).head())
 
+interm = None
+
+def get_interm(ser):
+    global interm
+    interm = ser
+    return ser
+
+fb_likes.fillna(0)\
+    .pipe(get_interm)\
+    .astype(int)\
+    .head()
+print(interm)
+
+col_map = { "director_name":"director", "num_voted_users":"vote"}
+
+print(movies.rename(columns=col_map).head(n=10))
+
+index_map = { "Avatar":"Ratava", "Spectre":"Ertceps"}
+
+print(movies.set_index("movie_title").rename(index=index_map,columns=col_map).head(3))
+
+movies = pd.read_csv(("C:/Users/preet/PycharmProjects/pandas_workbook/src/data/movie.csv"),
+         index_col = "movie_title")
+
+idx = movies.index.to_list()
+col = movies.columns.to_list()
+
+idx[0] = 'Rat '
+idx[1] = 'poc'
+idx[2] = 'exc'
+col[1] = 'director'
+col[-1] = ' fb_ likes '
+col[-2] = 'ar'
+
+movies.index = idx
+movies.columns = col
+print(movies.head())
+
+
+def to_cleanup(val):
+    return val.strip().lower().replace(' ', '_')
+
+print(movies.rename(columns=to_cleanup).head())
+
+cols = [
+    col.strip
+    for col in movies.columns
+]
+
+movies.columns = cols
+print(movies.head())
 
