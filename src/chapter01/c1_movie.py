@@ -148,8 +148,63 @@ cols = [
     col.strip
     for col in movies.columns
 ]
-
 movies.columns = cols
 print(movies.head())
+
+movies = pd.read_csv(("C:/Users/preet/PycharmProjects/pandas_workbook/src/data/movie.csv"))
+
+#movies["has_seen"] = 0
+#print(movies.head())
+
+#movies.assign(has_seen1 = 0)
+#print(movies.head())
+
+#total = (movies.actor_1_facebook_likes + movies.actor_2_facebook_likes +
+#         movies.actor_3_facebook_likes + movies.director_facebook_likes)
+#print(total.head())
+
+cols1 = ["actor_1_facebook_likes",  "actor_2_facebook_likes",
+        "actor_3_facebook_likes", "director_facebook_likes"]
+
+sum_col = movies.loc[:, cols1].sum(axis="columns")
+print(sum_col)
+
+movies.assign(total_likes1=sum_col)
+print(movies.head())
+
+def sum_likes(df):
+    return df[
+        [
+            c
+            for c in df.columns
+            if "like" in c
+            and ("actor" in c or "director" in c)
+        ]
+    ].sum(axis=1)
+
+movies.assign(total_likes2=sum_likes)
+print(movies.head())
+
+actor_sum = movies[
+    [
+        c
+        for c in movies.columns
+        if "actor" in c and "_likes" in c
+    ]
+].sum(axis="columns")
+
+print(actor_sum.head())
+
+pct_like = actor_sum.div(
+    movies.cast_total_facebook_likes
+).mul(100)
+
+print(pct_like.head())
+
+ser_a1 = pd.Series (
+    pct_like.to_numpy(), index = movies.movie_title
+).head()
+
+print(ser_a1.head())
 
 
