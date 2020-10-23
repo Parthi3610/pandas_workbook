@@ -84,3 +84,21 @@ new_col_order = (cat_core+cat_people+cat_other+cont_fb+cont_finance+cont_num_rev
 print(set(movies.columns) == set(new_col_order))
 
 print(movies[new_col_order].head())
+
+print(movies.describe())
+
+print(movies.describe().T)
+
+print(movies.describe(percentiles=[0.01,0.3,1]).T)
+
+print(movies.min(skipna=False))
+
+print(movies.isnull().head())
+
+print(movies.isnull().sum().head())
+
+print(movies.isnull().sum().sum())
+
+print(movies.select_dtypes(["object"]).fillna("").max())
+
+
