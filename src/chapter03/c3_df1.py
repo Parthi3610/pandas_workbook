@@ -27,16 +27,52 @@ diamonds = pd.read_csv("../data/diamonds.csv", nrows = 1000,
                            "price": np.int16,
                            "x": np.float32,
                            "y": np.float32,
-                           "z": np.float32
+                           "z": np.float32,
+                           "cut": "category",
+                           "color": "category",
+                           "clarity": "category"
                        },
                        )
 print(diamonds.info())
 
-print(diamonds.describe())
+cols = [
+    "carat",
+    "cut",
+    "color",
+    "clarity",
+    "depth",
+    "table",
+    "price"
+]
 
-print(diamonds.cut.value_counts())
-print(diamonds.color.value_counts())
-print(diamonds.clarity.value_counts())
+diamonds4 = pd.read_csv("../data/diamonds.csv", nrows = 1000,
+                        dtype = {
+                            "carat": np.float32,
+                            "cut": "category",
+                            "color": "category",
+                            "clarity": "category",
+                            "depth": np.float32,
+                            "table": np.float32,
+                            "price": np.int16,
+                        },
+                        usecols = cols,
+                        chunksize = 200,
+                        )
+
+i=0
+for chunk in diamonds4:
+    print(chunk.info())
+    i+=1
+    print("Iteration nbr # ", i)
+
+
+#print(diamonds4.info())
+
+
+#print(diamonds.describe())
+#print(diamonds.cut.value_counts())
+#print(diamonds.color.value_counts())
+#print(diamonds.clarity.value_counts())
 
 
 
