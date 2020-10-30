@@ -66,6 +66,8 @@ for chunk in diamonds4:
     print("Iteration nbr # ", i)
 
 
+
+
 #print(diamonds4.info())
 
 
