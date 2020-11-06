@@ -48,16 +48,16 @@ def main():
                                             }
 
 
-    resultsfile = open("resultsTally.csv",'wb')
-    fields = ["Subject", "Body", "Number of Occurences", "Date (First)", "Time (First)", "Duration (First)", "Date (Second)", "Time (Second)", "Duration (Second)", "Date (Third)", "Time (Third)", "Duration (Third)", "Further Dates", "Further Times", "Further Durations", "Participants"]
+    resultsfile = open("resultsTally.csv",'w')
+    fields = ["Subject", "Body", "Number of Occurences", "Date(First)", "Time(First)", "Duration(First)", "Date(Second)", "Time(Second)", "Duration(Second)", "Date(Third)", "Time(Third)", "Duration(Third)", "Further Dates", "Further Times", "Further Durations", "Participants"]
     resultsWriter = csv.DictWriter(resultsfile,fields)
     resultsWriter.writeheader()
 
     for subject in appointmentDictionary.keys():
         rowDict = {}
-        rowDict["subject"] = appointmentDictionary[subject]["Subject"] if appointmentDictionary[subject]["Subject"] else ""
-        rowDict["body"] = appointmentDictionary[subject]["Body"] if appointmentDictionary[subject]["Body"] else ""
-        rowDict["participants"] = ", ".join(appointmentDictionary[subject]["Participants"]) if appointmentDictionary[subject]["Participants"] else ""
+        rowDict["Subject"] = appointmentDictionary[subject]["Subject"] if appointmentDictionary[subject]["Subject"] else ""
+        rowDict["Body"] = appointmentDictionary[subject]["Body"] if appointmentDictionary[subject]["Body"] else ""
+        rowDict["Participants"] = ", ".join(appointmentDictionary[subject]["Participants"]) if appointmentDictionary[subject]["Participants"] else ""
         MeetingWriter(rowDict,appointmentDictionary[subject]["Meetings"], appointmentDictionary[subject]["Times"], appointmentDictionary[subject]["Durations"])
         rowDict["Number of Occurences"] = len(appointmentDictionary[subject]["Meetings"])
 
@@ -91,8 +91,8 @@ def MeetingWriter(rowDict, meetings, times, durations):
                 rowDict["Further Dates"] = times[i]
                 rowDict["Further Dates"] = durations[i]
 
-            datecount +=1
-        return rowDict
+        datecount +=1
+    return rowDict
 
 def InputDate(startOrEnd):
     ifValid = False
